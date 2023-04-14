@@ -1,41 +1,21 @@
 import {useEffect,useState} from 'react'
-const tabs= ['posts','comments','albums']
-function Content () {
 
-    const [title,setTitle] = useState('')
-    const [posts, setPosts] = useState([])
-    const [type, setType] = useState('posts')
-    useEffect(() =>{
-        fetch(`https://jsonplaceholder.typicode.com/${type}`)
-        .then(res => res.json())
-        .then(posts => {
-            setPosts(posts);
-        })
-    },[type])
+function Content () {
+    const [width,setWidth] = useState(window.innerWidth)
+    useEffect(() => {
+        const resizeHandle = () => {
+            setWidth(window.innerWidth)
+        }
+        window.addEventListener('resize',resizeHandle)
+        console.log(window.addEventListener)
+        return () => {
+            window.removeEventListener('resize',resizeHandle)
+        }
+    },[])
+    // console.log(width)
     return (
         <div>
-            {tabs.map(tab => (
-                <button 
-                    key={tab}
-                    style = {type === tab ? {
-                        color: '#fff',
-                        backgroundColor: '#333',
-                    }: {}}
-                    onClick = {() => setType(tab)}
-                >
-                    {tab}
-                </button>
-            ))}
-
-            <input
-                value = {title}
-                onChange = {e => setTitle(e.target.value)}
-            /> 
-            <ul>
-                {posts.map(post => (
-                    <li key={post.id}>{post.title}</li>
-                ))}
-            </ul>
+           <h1>{width}</h1> 
         </div>
     )
 }
