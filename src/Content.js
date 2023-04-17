@@ -1,22 +1,11 @@
-import {useEffect,useState} from 'react'
+import {useEffect,useState, memo} from 'react'
 
-function Content () {
-    const [width,setWidth] = useState(window.innerWidth)
-    useEffect(() => {
-        const resizeHandle = () => {
-            setWidth(window.innerWidth)
-        }
-        window.addEventListener('resize',resizeHandle)
-        console.log(window.addEventListener)
-        return () => {
-            window.removeEventListener('resize',resizeHandle)
-        }
-    },[])
-    // console.log(width)
+function Content ({onIncrease}) {
+    console.log('re-render')
     return (
-        <div>
-           <h1>{width}</h1> 
-        </div>
-    )
+        <>
+            <button onClick = {onIncrease}>Click me</button>
+        </>
+        )
 }
-export default Content
+export default memo(Content)
